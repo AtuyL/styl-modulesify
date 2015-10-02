@@ -1,10 +1,24 @@
 {
   "name": "styl-modulesify",
-  "version": "0.0.2-beta",
+  "version": "0.0.3-beta",
   "description": "stylus injector for css modules",
   "main": "index.js",
-  "author": "AtuyL <atuyl.jp@gmail.com>",
+  "author": {
+    "name": "AtuyL",
+    "email": "atuyl.jp@gmail.com"
+  },
+  "keywords": [
+    "css",
+    "css-modules",
+    "style",
+    "stylesheets",
+    "stylus"
+  ],
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AtuyL/styl-modulesify.git"
+  },
   "dependencies": {
     "css-modules-loader-core": "0.0.12",
     "nib": "^1.1.0",
