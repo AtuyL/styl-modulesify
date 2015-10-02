@@ -1,0 +1,15 @@
+{
+  "name": "styl-modulesify",
+  "version": "0.0.1-beta",
+  "description": "stylus injector for css modules",
+  "main": "index.js",
+  "author": "AtuyL <atuyl.jp@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "css-modules-loader-core": "0.0.12",
+    "nib": "^1.1.0",
+    "string-hash": "^1.1.0",
+    "stylus": "^0.52.4",
+    "through": "^2.3.8"
+  }
+}
