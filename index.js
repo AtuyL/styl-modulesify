@@ -13,7 +13,7 @@ class StylModulesify extends Transform {
         this._filename = filename
         this._data = ''
     }
-    // fork from css-modulesify 
+    // fork from css-modulesify
     _generateShortName(name, filename, css){
         var hash = strHash(css).toString(36).substr(0, 5)
         var i = css.indexOf('.' + name)
@@ -24,17 +24,25 @@ class StylModulesify extends Transform {
         if (error) return this.emit("error", error)
         var sourceString = css
         var sourcePath = this._filename
-        var pathFetcher = ""
+        var trace = ""
+        var pathFetcher = function(){}
         var { localByDefault, extractImports, scope } = Core
-        scope.generateScopedName = this._generateShortName
+        scope = scope({
+            generateScopedName:this._generateShortName
+        })
+        localByDefault = localByDefault({})
+        extractImports = extractImports({})
         new Core([ localByDefault, extractImports, scope ])
-            .load(sourceString, sourcePath, pathFetcher)
+            .load(sourceString, sourcePath, trace, pathFetcher)
                 .then( result => {
                     var { injectableSource, exportTokens } = result
                     this.injectableSource = injectableSource
                     this.exportTokens = exportTokens
                     this.push('module.exports = ' + JSON.stringify(exportTokens))
                     callback()
+                })
+                .catch( error => {
+                    console.error(error)
                 })
     }
     _transform(buf, enc, callback) {
@@ -50,12 +58,10 @@ class StylModulesify extends Transform {
 }
 
 export default function (browserify, options) {
-    var files = []
     var transforms = {}
     return browserify
         .transform((filename) => {
             if (extname(filename) !== '.styl') return PassThrough()
-            files.push(resolve(dirname(filename)))
             return transforms[filename] = new StylModulesify(filename, options)
         })
         .on('bundle', (bundle) => {
