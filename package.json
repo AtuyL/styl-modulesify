@@ -1,6 +1,6 @@
 {
   "name": "styl-modulesify",
-  "version": "0.0.4-beta",
+  "version": "0.0.5-beta",
   "description": "stylus injector for css modules",
   "main": "index.js",
   "author": {

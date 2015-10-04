@@ -8,10 +8,13 @@ import Core from 'css-modules-loader-core'
 import strHash from 'string-hash'
 
 class StylModulesify extends Transform {
-    constructor(filename, opts){
+    constructor(filename, options){
         super()
         this._filename = filename
         this._data = ''
+        this._options = Object.assign({
+            paths: []
+        }, options)
     }
     // fork from css-modulesify
     _generateShortName(name, filename, css){
@@ -42,7 +45,7 @@ class StylModulesify extends Transform {
                     callback()
                 })
                 .catch( error => {
-                    console.error(error)
+                    this.emit("error", error)
                 })
     }
     _transform(buf, enc, callback) {
@@ -50,10 +53,18 @@ class StylModulesify extends Transform {
         callback()
     }
     _flush(callback) {
-        stylus(this._data)
+        var s = stylus(this._data)
             .set("filename", this._filename)
-            .include(nib.path).import("nib")
-            .render(this._renderer.bind(this, callback))
+            .set("paths", this._options.paths.concat(nib.path))
+            .import("nib")
+        if ( typeof this._options.bypath === "function" ) {
+            this._options.bypath(s, error => {
+                if (error) return this.emit("error", error)
+                s.render(this._renderer.bind(this, callback))
+            })
+        } else {
+            s.render(this._renderer.bind(this, callback))
+        }
     }
 }
 
