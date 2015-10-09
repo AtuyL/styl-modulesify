@@ -1,17 +1,19 @@
 {
   "name": "styl-modulesify",
-  "version": "0.0.5-beta",
+  "version": "1.0.0",
   "description": "stylus injector for css modules",
   "main": "index.js",
   "author": {
     "name": "AtuyL",
     "email": "atuyl.jp@gmail.com"
   },
+  "scripts": {
+    "build": "node_modules/.bin/babel -o index.js index.es6"
+  },
   "keywords": [
+    "browserify",
     "css",
     "css-modules",
-    "style",
-    "stylesheets",
     "stylus"
   ],
   "license": "ISC",
@@ -25,5 +27,8 @@
     "string-hash": "^1.1.0",
     "stylus": "^0.52.4",
     "through": "^2.3.8"
+  },
+  "devDependencies": {
+    "babel": "^5.8.23"
   }
 }
