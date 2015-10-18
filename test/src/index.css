@@ -1,0 +1,3 @@
+.hoge {
+    composes: fuga from "foo.css";
+}

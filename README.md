@@ -1,74 +1,67 @@
 # styl-modulesify
-stylus injector for browserify.
-powered by css modules.
 
-# Usage
+[stylus](https://learnboost.github.io/stylus/) injector for [browserify](http://browserify.org/).  
+powered by [css modules](http://glenmaddern.com/articles/css-modules).
 
-in browserify (es6)
+## Usage
 
-```javascript
-import stylModulesify from "styl-modulesify"
-browserify()
-    .plugin(stylModulesify, {
-        output: "www/modules.css", // <- This is required.
-        paths: ["src"], // <- Please see this: https://learnboost.github.io/stylus/docs/js.html#setsetting-value
-        bypath: (s, cb) => { // <- This will called before the rendering. s == stylus() instance.
-            cb(null) // <- nodejs idiom.
-        }
-    })
-```
-
-in browserify (es5)
+### in browserify
 
 ```javascript
+//es6// import stylModulesify from "styl-modulesify"
 var stylModulesify = require("styl-modulesify")
 browserify()
-    .plugin(stylModulesify, {
+    .plugin(stylModulesify, {// <- options
         output: "www/modules.css", // <- This is required.
         paths: ["src"], // <- Please see this: https://learnboost.github.io/stylus/docs/js.html#setsetting-value
+        csso: true, // default: false. if you set `true`, you get an compressed "modules.css".
         bypath: function(s, cb) { // <- This will called before the rendering. s == stylus() instance.
             cb(null) // <- nodejs idiom.
         }
     })
 ```
 
-in styl ( ex. my-button.styl )
+### in styl ( ex. my-button.styl )
 
 ```stylus
+.common
+    composes: rounded from "theme.styl"
+    composes: large from "sizes.css"
+    &:hover
+    	border-color: orange
 .default
-    display: block
-    font-size: 14pt
-    background-color: white
-    padding: 0.5em
-    border: 1px solid black
-    color: black
-.normal
-    composes: default
-.active
-    composes: default
-    color: red
-    border-color: red
-.focus
-    composes: default
-    border-color: red
+    composes: common
 .disabled
-    composes: default
+    composes: common
     color: gray
     border-color: gray
 ```
 
-in react jsx
+### in js ( browserified )
 
 ```javascript
-import { normal, active, focus, disabled } from "my-button.styl"
-...
-<button className={normal} />
-```
-
-in other case (es5)
-
-```javascript
+//es6// import myButtonTheme from "my-button.styl"
 var myButtonTheme = require("my-button.styl")
 ...
-<button className={myButtonTheme.normal} />
+'<button class="' + myButtonTheme.default + '" />'
+'<button class="' + myButtonTheme.default + '" disabled />'
 ```
+
+## Options
+
+### options.output
+
+Output path of css-modules.  
+This is **REQUIRED**
+
+> type: string  
+> required: true
+
+### options.csso
+
+If you set `true`, You will get an compressed `options.output`.  
+If you not need an restructured-css, set an object `{ restructure: false }`.
+
+> type: boolean or object  
+> required: false  
+> default: false

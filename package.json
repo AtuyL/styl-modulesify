@@ -1,6 +1,6 @@
 {
   "name": "styl-modulesify",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "stylus injector for css modules",
   "main": "index.js",
   "author": {
@@ -8,6 +8,7 @@
     "email": "atuyl.jp@gmail.com"
   },
   "scripts": {
+    "test": "node_modules/.bin/gulp --gulpfile test/gulpfile.babel.js",
     "build": "node_modules/.bin/babel -o index.js index.es6"
   },
   "keywords": [
@@ -22,13 +23,19 @@
     "url": "git+https://github.com/AtuyL/styl-modulesify.git"
   },
   "dependencies": {
-    "css-modules-loader-core": "0.0.12",
+    "css-modules-loader-core": "^1.0.0-beta4",
+    "csso": "^1.4.0",
+    "glob": "^5.0.15",
     "nib": "^1.1.0",
     "string-hash": "^1.1.0",
     "stylus": "^0.52.4",
     "through": "^2.3.8"
   },
   "devDependencies": {
-    "babel": "^5.8.23"
+    "babel": "^5.8.23",
+    "browserify": "^11.2.0",
+    "gulp": "^3.9.0",
+    "rimraf": "^2.4.3",
+    "vinyl-source-stream": "^1.1.0"
   }
 }
