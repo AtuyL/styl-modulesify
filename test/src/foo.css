@@ -1,0 +1,6 @@
+.fuga {
+    background: red;
+}
+.cpcss {
+    composes: reset from "reset.css"
+}
