@@ -40,10 +40,6 @@ var _stringHash = require('string-hash');
 
 var _stringHash2 = _interopRequireDefault(_stringHash);
 
-var _csso = require('csso');
-
-var _csso2 = _interopRequireDefault(_csso);
-
 var _glob = require('glob');
 
 var _glob2 = _interopRequireDefault(_glob);
@@ -204,7 +200,7 @@ exports['default'] = function (browserify) {
             css += Object.keys(transforms).map(function (filename) {
                 return transforms[filename].injectableSource;
             }).join("\n");
-            (0, _fs.writeFile)(options.output, options.csso ? _csso2['default'].minify(css, options.csso) : css, function (error) {
+            (0, _fs.writeFile)(options.output, css, function (error) {
                 return error ? browserify.emit('error', error) : null;
             });
             transforms = {};

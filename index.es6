@@ -6,7 +6,6 @@ import stylus from 'stylus'
 import nib from 'nib'
 import Core from 'css-modules-loader-core'
 import strHash from 'string-hash'
-import csso from 'csso'
 import glob from 'glob'
 
 class StylModulesify extends Transform {
@@ -146,7 +145,7 @@ export default function (browserify, options = {}) {
                     .join("\n")
                 writeFile(
                     options.output,
-                    options.csso ? csso.minify(css, options.csso) : css,
+                    css,
                     error => error ? browserify.emit('error', error) : null
                 )
                 transforms = {}
